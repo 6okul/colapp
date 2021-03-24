@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "38699039370",
+    "project_id": "colapp-base",
+    "storage_bucket": "colapp-base.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:38699039370:android:a581c65a42227fe4044b73",
+        "android_client_info": {
+          "package_name": "com.example.colapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "38699039370-lgjmg0ead681irgfsrktl26rdh4lfs3n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC87sVl-4BtVO5lL8KmSO_bESjdJpmL8TM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "38699039370-lgjmg0ead681irgfsrktl26rdh4lfs3n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
