@@ -2,7 +2,7 @@
 
 # Colapp
 
-An UG academic project, An app built using Flutter SDK and Firebase.
+An UG academic project app built with Flutter SDK and Firebase.
 
 #### By 18COS26
 #### Department of Computer Science
