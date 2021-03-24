@@ -1,4 +1,3 @@
-![Alt text]()
 <img src="./assets/logo.png">
 # Colapp
 
