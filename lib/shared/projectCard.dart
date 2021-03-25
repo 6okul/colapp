@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProjectCard extends StatelessWidget {
   Map<String, dynamic> project;
@@ -117,17 +119,54 @@ class ProjectCard extends StatelessWidget {
               linkStyle: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
-          if (project["optLink"].length > 0) ...[
-            RaisedButton(
-              splashColor: Colors.blue,
-              onPressed: () {},
-              child: Text(project["optLinkName"]),
-              textColor: Colors.white,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-          ],
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              if (project["optLink"].length > 0) ...[
+                RaisedButton(
+                  splashColor: Colors.blue,
+                  onPressed: () async {
+                    try {
+                      await canLaunch(project["optLink"])
+                          ? await launch(project["optLink"])
+                          : throw 'Could not launch';
+                    } catch (e) {
+                      Scaffold.of(context).showSnackBar(
+                          SnackBar(content: Text("Could not launch link.")));
+                    }
+                  },
+                  child: Text(project["optLinkName"]),
+                  textColor: Colors.white,
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+              ],
+              RaisedButton(
+                splashColor: Colors.blue,
+                onPressed: () async {
+                  await FirebaseFirestore.instance
+                      .collection("users")
+                      .doc(project['uid'])
+                      .get()
+                      .then((value) async {
+                    String contactNumber;
+                    if (value.data()["contactNumber"].length > 0) {
+                      contactNumber = value.data()["contactNumber"].trim();
+                    }
+                    await canLaunch('tel:$contactNumber')
+                        ? await launch('tel:$contactNumber')
+                        : throw 'Could not launch';
+                  });
+                },
+                child: Text("Contact"),
+                textColor: Colors.white,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
         ],
       ),
     );
