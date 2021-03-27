@@ -25,6 +25,16 @@ class _HomeRootState extends State<HomeRoot> {
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => CreateProjectScreen()));
+              }),
+          IconButton(
+              padding: EdgeInsets.only(right: 20),
+              icon: Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => FindScreen()));
               })
         ],
         automaticallyImplyLeading: false,
@@ -36,7 +46,7 @@ class _HomeRootState extends State<HomeRoot> {
       body: Container(
         child: IndexedStack(
           index: _selectedIndex,
-          children: [HomeScreen(), FindScreen(), AccountScreen()],
+          children: [HomeScreen(), AccountScreen()],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -48,18 +58,9 @@ class _HomeRootState extends State<HomeRoot> {
         currentIndex: _selectedIndex,
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home),
-              label: "Home",
-              backgroundColor: Colors.white),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.search,
-              ),
-              activeIcon: Icon(
-                Icons.search_rounded,
-              ),
-              label: "Find",
+              icon: Icon(Icons.explore_outlined),
+              activeIcon: Icon(Icons.explore),
+              label: "Explore",
               backgroundColor: Colors.white),
           BottomNavigationBarItem(
               icon: Icon(Icons.person_outline),

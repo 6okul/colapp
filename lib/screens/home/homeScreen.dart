@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colapp/shared/projectCard.dart';
+import 'package:colapp/state/userAuthState.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 // class HomeScreen extends StatelessWidget {
 //   @override
@@ -50,6 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String currentUid =
+        Provider.of<UserAuthState>(context, listen: false).getCurrentUser.uid;
     return Center(
       child: listDocument.length != 0
           ? RefreshIndicator(
@@ -60,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   controller: scrollController,
                   itemCount: listDocument.length,
                   itemBuilder: (context, index) {
-                    return ProjectCard(listDocument[index]);
+                    return ProjectCard(listDocument[index], currentUid);
                   },
                 ),
               ),
