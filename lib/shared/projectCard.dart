@@ -1,13 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:colapp/shared/profileViewScreen.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProjectCard extends StatelessWidget {
-  Map<String, dynamic> project;
+  final Map<String, dynamic> project;
+  final String currentUid;
 
-  ProjectCard(this.project);
+  ProjectCard(this.project, this.currentUid);
 
   @override
   Widget build(BuildContext context) {
@@ -26,43 +28,63 @@ class ProjectCard extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
             ),
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    padding: const EdgeInsets.all(5),
-                    child: CircleAvatar(
-                      radius: 20,
-                      child: ClipOval(
-                          child: (project["profileUrl"] == null)
-                              ? Image.asset('assets/default_profile.jpg')
-                              : Image.network(project["profileUrl"])),
+            child: GestureDetector(
+              //handle profile tap
+              onTap: () async {
+                if (project["uid"] == currentUid) {
+                  Scaffold.of(context)
+                      .showSnackBar(SnackBar(content: Text("Your Account !")));
+                } else {
+                  Map<String, dynamic> profile;
+                  await FirebaseFirestore.instance
+                      .collection("users")
+                      .doc(project["uid"])
+                      .get()
+                      .then((value) => profile = value.data());
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return ProfileViewScreen(profile);
+                  }));
+                }
+              },
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      padding: const EdgeInsets.all(5),
+                      child: CircleAvatar(
+                        radius: 20,
+                        child: ClipOval(
+                            child: (project["profileUrl"] == null)
+                                ? Image.asset('assets/default_profile.jpg')
+                                : Image.network(project["profileUrl"])),
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                    flex: 4,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          project["profileName"],
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: Colors.black),
-                        ),
-                        Text(
-                          project["profileTitle"] + "",
-                          style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 12,
-                              color: Colors.black),
-                        ),
-                      ],
-                    )),
-              ],
+                  Expanded(
+                      flex: 4,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            project["profileName"],
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.black),
+                          ),
+                          Text(
+                            project["profileTitle"] + "",
+                            style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 12,
+                                color: Colors.black),
+                          ),
+                        ],
+                      )),
+                ],
+              ),
             ),
           ),
           Divider(
