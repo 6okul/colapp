@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:colapp/screens/account/ManageProjects.dart';
 import 'package:colapp/services/database.dart';
 import 'package:colapp/services/storage.dart';
 import 'package:colapp/state/userAuthState.dart';

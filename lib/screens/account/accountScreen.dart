@@ -1,4 +1,3 @@
-import 'package:colapp/screens/account/ManageProjects.dart';
 import 'package:colapp/screens/account/accountHeader.dart';
 import 'package:colapp/root.dart';
 import 'package:colapp/screens/account/edit/editProfile.dart';
