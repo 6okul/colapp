@@ -47,13 +47,14 @@ class ProfileViewScreen extends StatelessWidget {
                           projectsCount,
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 24,
+                            fontSize: 30,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
                           "Projects",
                           style: TextStyle(
+                            fontSize: 18,
                             color: Colors.white,
                           ),
                         )
@@ -80,32 +81,6 @@ class ProfileViewScreen extends StatelessWidget {
                       backgroundImage: (profileUrl == null)
                           ? AssetImage('assets/default_profile.jpg')
                           : NetworkImage(profileUrl)),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    // implement connections
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.all(10),
-                    child: Column(
-                      children: [
-                        Text(
-                          connectionsCount,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          "Connections",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
                 ),
               ],
             ),
