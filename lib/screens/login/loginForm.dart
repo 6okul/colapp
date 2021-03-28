@@ -2,6 +2,7 @@ import 'package:colapp/root.dart';
 import 'package:colapp/screens/profile/createProfile.dart';
 import 'package:colapp/screens/register/RegisterScreen.dart';
 import 'package:colapp/screens/register/VerifyEmail.dart';
+import 'package:colapp/screens/reset/resetPassword.dart';
 import 'package:colapp/shared/loading.dart';
 import 'package:colapp/state/userAuthState.dart';
 import 'package:flutter/material.dart';
@@ -109,7 +110,7 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 30,
                 ),
                 FlatButton(
                     onPressed: () {
@@ -119,6 +120,21 @@ class _LoginFormState extends State<LoginForm> {
                     splashColor: Colors.purple,
                     child: Text(
                       "Create New Account",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    )),
+                Text(
+                  "- or -",
+                  style: TextStyle(color: Colors.grey),
+                ),
+                FlatButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ResetPassword()));
+                    },
+                    splashColor: Colors.purple,
+                    child: Text(
+                      "Forget password ?",
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ))

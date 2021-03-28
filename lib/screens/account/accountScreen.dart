@@ -1,7 +1,9 @@
+import 'package:colapp/screens/account/ManageProjects.dart';
 import 'package:colapp/screens/account/accountHeader.dart';
 import 'package:colapp/root.dart';
 import 'package:colapp/screens/account/edit/editProfile.dart';
 import 'package:colapp/state/userAuthState.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +18,7 @@ class AccountScreen extends StatelessWidget {
         ListTile(
           trailing: Icon(Icons.logout),
           title: Text("Logout"),
+          subtitle: Text("See you later !"),
           onTap: () {
             UserAuthState authState =
                 Provider.of<UserAuthState>(context, listen: false);
@@ -24,6 +27,31 @@ class AccountScreen extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => Root()),
                       (route) => false)
                 });
+          },
+        ),
+        ListTile(
+          trailing: Icon(Icons.vpn_key),
+          title: Text("Reset Password"),
+          subtitle: Text("Send reset link to email"),
+          onTap: () async {
+            UserAuthState authState =
+                Provider.of<UserAuthState>(context, listen: false);
+            try {
+              FirebaseAuth.instance
+                  .sendPasswordResetEmail(email: authState.getCurrentUser.email)
+                  .whenComplete(() {
+                authState.logout().whenComplete(() => {
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (context) => Root()),
+                          (route) => false)
+                    });
+              });
+            } on FirebaseAuthException catch (e) {
+              Scaffold.of(context)
+                  .showSnackBar(SnackBar(content: Text(e.message)));
+            } catch (e) {
+              print(e);
+            }
           },
         ),
       ],
@@ -77,9 +105,9 @@ class AccountScreen extends StatelessWidget {
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.settings),
+                    Icon(Icons.security_rounded),
                     SizedBox(width: 10),
-                    Text("Settings"),
+                    Text("Options"),
                   ],
                 ),
               )

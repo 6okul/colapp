@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:colapp/screens/account/ManageProjects.dart';
 import 'package:colapp/services/database.dart';
 import 'package:colapp/services/storage.dart';
 import 'package:colapp/state/userAuthState.dart';
@@ -57,19 +58,21 @@ class AccountHeader extends StatelessWidget {
     return StreamBuilder(
         stream: snapshots,
         builder: (context, snapshot) {
+          List<dynamic> projects;
           String projectsCount = "!";
-          String connectionsCount = "!";
+
           String profileUrl;
           String fullName = "!";
           String title = "!";
           String bio = "!";
           if (snapshot.data != null) {
             projectsCount = snapshot.data["projects"].length.toString();
-            connectionsCount = snapshot.data["connections"].length.toString();
+
             profileUrl = snapshot.data["profileUrl"];
             fullName = snapshot.data["fullName"];
             title = snapshot.data["title"];
             bio = snapshot.data["bio"];
+            projects = snapshot.data["projects"];
           }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,30 +83,6 @@ class AccountHeader extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        margin: const EdgeInsets.all(10),
-                        child: Column(
-                          children: [
-                            Text(
-                              projectsCount,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              "Projects",
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100),
@@ -130,25 +109,24 @@ class AccountHeader extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {
-                        // implement connections
-                      },
+                      onTap: () {},
                       child: Container(
                         margin: const EdgeInsets.all(10),
                         child: Column(
                           children: [
                             Text(
-                              connectionsCount,
+                              projectsCount,
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 24,
+                                fontSize: 30,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
-                              "Connections",
+                              "Projects",
                               style: TextStyle(
                                 color: Colors.white,
+                                fontSize: 18,
                               ),
                             )
                           ],

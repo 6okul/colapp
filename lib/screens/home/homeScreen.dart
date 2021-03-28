@@ -108,8 +108,10 @@ class _HomeScreenState extends State<HomeScreen> {
           value; // store collection state to set where to start next
       value.docs.forEach((element) {
         print('getDocuments ${element.data()}');
+        Map project = element.data();
+        project["docId"] = element.reference.id;
         setState(() {
-          listDocument.add(element.data());
+          listDocument.add(project);
         });
       });
     });

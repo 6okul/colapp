@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:colapp/screens/project/edit/editProject.dart';
+import 'package:colapp/services/database.dart';
 import 'package:colapp/shared/profileViewScreen.dart';
 import 'package:expandable_text/expandable_text.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -50,7 +53,7 @@ class ProjectCard extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    flex: 1,
+                    flex: 2,
                     child: Container(
                       padding: const EdgeInsets.all(5),
                       child: CircleAvatar(
@@ -63,7 +66,7 @@ class ProjectCard extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                      flex: 4,
+                      flex: 5,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -83,6 +86,37 @@ class ProjectCard extends StatelessWidget {
                           ),
                         ],
                       )),
+                  if (project["uid"] == currentUid) ...[
+                    Expanded(
+                        flex: 1,
+                        child: IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      EditProjectScreen(project)));
+                            })),
+                    Expanded(
+                        flex: 1,
+                        child: IconButton(
+                            icon: Icon(
+                              Icons.delete,
+                              color: Colors.red[900],
+                            ),
+                            onPressed: () {
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                  action: SnackBarAction(
+                                    onPressed: () async {
+                                      FirestoreServices().deleteProject(
+                                          docId: project["docId"],
+                                          uid: project["uid"]);
+                                    },
+                                    textColor: Colors.red,
+                                    label: "Yes, Delete.",
+                                  ),
+                                  content: Text("Are you sure ?")));
+                            })),
+                  ]
                 ],
               ),
             ),
@@ -164,7 +198,7 @@ class ProjectCard extends StatelessWidget {
                   width: 20,
                 ),
               ],
-              RaisedButton(
+              FlatButton(
                 splashColor: Colors.blue,
                 onPressed: () async {
                   await FirebaseFirestore.instance
@@ -181,11 +215,14 @@ class ProjectCard extends StatelessWidget {
                         : throw 'Could not launch';
                   });
                 },
-                child: Text("Contact"),
-                textColor: Colors.white,
+                child: Text(
+                  "Contact",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                textColor: Colors.black,
               ),
               SizedBox(
-                height: 10,
+                width: 20,
               ),
             ],
           ),
