@@ -90,7 +90,11 @@ class ProjectCard extends StatelessWidget {
                     Expanded(
                         flex: 1,
                         child: IconButton(
-                            icon: Icon(Icons.edit),
+                            icon: Icon(
+                              Icons.edit,
+                              size: 20,
+                              color: Colors.blueGrey,
+                            ),
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) =>
@@ -102,6 +106,7 @@ class ProjectCard extends StatelessWidget {
                             icon: Icon(
                               Icons.delete,
                               color: Colors.red[900],
+                              size: 20,
                             ),
                             onPressed: () {
                               Scaffold.of(context).showSnackBar(SnackBar(
