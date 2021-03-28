@@ -22,7 +22,7 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
             Text(
-              "Collab with ease",
+              "Discover & Collab",
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.normal),
             ),
             LoginForm(),
